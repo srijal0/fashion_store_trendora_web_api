@@ -1,3 +1,4 @@
+// register form code
 "use client";
 
 import { useForm } from "react-hook-form";
