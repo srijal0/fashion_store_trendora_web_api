@@ -2,9 +2,6 @@
 
 import LoginForm from "../_components/LoginForm";
 
-
-//page
-//lkjrovif
 export default function Page() {
   return (
     <div>
