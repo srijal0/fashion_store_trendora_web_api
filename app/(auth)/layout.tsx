@@ -6,9 +6,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <div className="h-full w-full grid md:grid-cols-2">
 
        
+      
         <div className="relative hidden md:block h-full">
           <Image
             src="/image1.png"  
+            
             alt="Trendora"
             fill
             priority
