@@ -15,7 +15,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             className="object-cover"
           />
         </div>
-//RIGHT
+
         {/* RIGHT SIDE – FORM */}
         <div className="flex h-full items-center justify-center px-4 md:px-10 bg-rose-50">
           {children}
