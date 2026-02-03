@@ -7,8 +7,18 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 
-import { LoginData, loginSchema } from "../schema";
 import { handleLogin } from "@/lib/action/auth-action";
+import { LoginData, loginSchema } from "../schema";
+
+// ✅ Helper: decode JWT token and extract the role
+function decodeToken(token: string): { role?: string } | null {
+  try {
+    const payload = token.split(".")[1];
+    return JSON.parse(atob(payload));
+  } catch {
+    return null;
+  }
+}
 
 export default function LoginForm() {
   const router = useRouter();
@@ -31,8 +41,19 @@ export default function LoginForm() {
         throw new Error(res.message || "Login Failed");
       }
 
+      // ✅ Decode the token from the cookie to get the role
+      const token = document.cookie
+        .split("; ")
+        .find((row) => row.startsWith("token="))?.split("=")[1];
+
+      const decoded = token ? decodeToken(token) : null;
+
+      // ✅ Redirect based on role: admin → /admin/dashboard, others → /dashboard
+      const redirectPath =
+        decoded?.role === "admin" ? "/admin/dashboard" : "/dashboard";
+
       startTransition(() => {
-        router.push("/dashboard");
+        router.push(redirectPath);
       });
     } catch (err: Error | any) {
       setError(err.message || "Login Failed");
