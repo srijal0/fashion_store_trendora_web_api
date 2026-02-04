@@ -108,6 +108,7 @@ export default function UserDashboardPage() {
   );
 }
 
+
 /* ================= UI Components ================= */
 
 function StatCard({ title, value }: { title: string; value: string }) {
@@ -166,3 +167,4 @@ function OrderRow({
     </tr>
   );
 }
+
