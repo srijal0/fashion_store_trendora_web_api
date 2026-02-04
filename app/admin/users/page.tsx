@@ -59,7 +59,7 @@ export default function AdminUsersPage() {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-400 mx-auto"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-pink-400 mx-auto"></div>
           <p className="mt-4 text-sm text-gray-600">Loading users...</p>
         </div>
       </div>
@@ -77,7 +77,7 @@ export default function AdminUsersPage() {
           </div>
           <Link
             href="/admin/users/create"
-            className="px-4 py-2 bg-red-400 text-white text-sm font-semibold rounded-md hover:bg-red-500 transition-colors"
+            className="px-4 py-2 bg-pink-400 text-white text-sm font-semibold rounded-md hover:bg-pink-500 transition-colors"
           >
             + Create User
           </Link>
@@ -100,7 +100,7 @@ export default function AdminUsersPage() {
             <table className="w-full">
               {/* Table Header */}
               <thead>
-                <tr className="bg-red-50 border-b border-red-100">
+                <tr className="bg-pink-50 border-b border-pink-100">
                   <th className="text-left px-4 py-3 text-xs font-semibold text-gray-600 uppercase">
                     User
                   </th>
@@ -137,7 +137,7 @@ export default function AdminUsersPage() {
                       <td className="px-4 py-3">
                         <div className="flex items-center gap-3">
                           {/* Avatar */}
-                          <div className="w-9 h-9 rounded-full overflow-hidden border border-gray-200 bg-red-100 flex items-center justify-center">
+                          <div className="w-9 h-9 rounded-full overflow-hidden border border-gray-200 bg-pink-100 flex items-center justify-center">
                             {user.profileImage ? (
                               <img
                                 src={
@@ -155,7 +155,7 @@ export default function AdminUsersPage() {
                                 className="w-full h-full object-cover"
                               />
                             ) : (
-                              <span className="text-sm font-semibold text-red-600">
+                              <span className="text-sm font-semibold text-pink-600">
                                 {user.firstName ? user.firstName[0] : user.email[0].toUpperCase()}
                               </span>
                             )}
@@ -187,7 +187,7 @@ export default function AdminUsersPage() {
                         <span
                           className={`inline-block px-2 py-1 rounded-full text-xs font-semibold ${
                             user.role === "admin"
-                              ? "bg-red-100 text-red-700"
+                              ? "bg-pink-100 text-pink-700"
                               : "bg-gray-100 text-gray-600"
                           }`}
                         >
@@ -216,7 +216,7 @@ export default function AdminUsersPage() {
                           {/* Edit Button */}
                           <Link
                             href={`/admin/users/${user.id}/edit`}
-                            className="px-3 py-1 text-xs font-medium text-red-600 bg-red-100 rounded-md hover:bg-red-200 transition-colors"
+                            className="px-3 py-1 text-xs font-medium text-pink-600 bg-pink-100 rounded-md hover:bg-pink-200 transition-colors"
                           >
                             Edit
                           </Link>

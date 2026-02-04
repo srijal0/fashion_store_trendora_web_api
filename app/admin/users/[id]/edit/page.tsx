@@ -68,8 +68,8 @@ export default function AdminUserEditPage() {
       if (user.profileImage) {
         const proxiedUrl = user.profileImage.startsWith("/uploads")
           ? `/api/image-proxy?url=${encodeURIComponent(
-              `${process.env.NEXT_PUBLIC_API_BASE_URL}${user.profileImage}`
-            )}`
+             `${process.env.NEXT_PUBLIC_API_BASE_URL}${user.profileImage}`
+          )}`
           : user.profileImage;
         setImagePreview(proxiedUrl);
       }
@@ -180,7 +180,7 @@ export default function AdminUserEditPage() {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-400 mx-auto"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-pink-400 mx-auto"></div>
           <p className="mt-4 text-sm text-gray-600">Loading...</p>
         </div>
       </div>
@@ -195,7 +195,7 @@ export default function AdminUserEditPage() {
           <div className="flex items-center gap-3">
             <Link
               href={`/admin/users/${id}`}
-              className="text-sm text-gray-500 hover:text-red-500 transition-colors"
+              className="text-sm text-gray-500 hover:text-pink-500 transition-colors"
             >
               ← Back
             </Link>
@@ -217,7 +217,7 @@ export default function AdminUserEditPage() {
           {/* Profile Image */}
           <div className="flex flex-col items-center space-y-3">
             <div className="relative group">
-              <div className="relative w-24 h-24 rounded-full overflow-hidden border-4 border-red-200 shadow-lg bg-red-100 flex items-center justify-center">
+              <div className="relative w-24 h-24 rounded-full overflow-hidden border-4 border-pink-200 shadow-lg bg-pink-100 flex items-center justify-center">
                 {imagePreview ? (
                   <img
                     src={imagePreview}
@@ -225,7 +225,7 @@ export default function AdminUserEditPage() {
                     className="w-full h-full object-cover"
                   />
                 ) : (
-                  <span className="text-2xl font-semibold text-red-600">
+                  <span className="text-2xl font-semibold text-pink-600">
                     {getDefaultAvatar()}
                   </span>
                 )}
@@ -254,7 +254,7 @@ export default function AdminUserEditPage() {
               <button
                 type="button"
                 onClick={() => fileInputRef.current?.click()}
-                className="flex-1 px-3 py-2 text-xs rounded-md bg-red-100 text-red-600 font-medium hover:bg-red-200"
+                className="flex-1 px-3 py-2 text-xs rounded-md bg-pink-100 text-pink-600 font-medium hover:bg-pink-200"
               >
                 Choose Photo
               </button>
@@ -282,7 +282,7 @@ export default function AdminUserEditPage() {
                 value={formData.firstName}
                 onChange={handleChange}
                 placeholder="First name"
-                className="h-10 w-full rounded-md border border-gray-300 bg-gray-50 px-3 text-sm outline-none focus:border-red-400 focus:ring-1 focus:ring-red-400"
+                className="h-10 w-full rounded-md border border-gray-300 bg-gray-50 px-3 text-sm outline-none focus:border-pink-400 focus:ring-1 focus:ring-pink-400"
               />
             </div>
 
@@ -294,7 +294,7 @@ export default function AdminUserEditPage() {
                 value={formData.lastName}
                 onChange={handleChange}
                 placeholder="Last name"
-                className="h-10 w-full rounded-md border border-gray-300 bg-gray-50 px-3 text-sm outline-none focus:border-red-400 focus:ring-1 focus:ring-red-400"
+                className="h-10 w-full rounded-md border border-gray-300 bg-gray-50 px-3 text-sm outline-none focus:border-pink-400 focus:ring-1 focus:ring-pink-400"
               />
             </div>
           </div>
@@ -308,7 +308,7 @@ export default function AdminUserEditPage() {
               value={formData.username}
               onChange={handleChange}
               placeholder="username"
-              className="h-10 w-full rounded-md border border-gray-300 bg-gray-50 px-3 text-sm outline-none focus:border-red-400 focus:ring-1 focus:ring-red-400"
+              className="h-10 w-full rounded-md border border-gray-300 bg-gray-50 px-3 text-sm outline-none focus:border-pink-400 focus:ring-1 focus:ring-pink-400"
             />
           </div>
 
@@ -321,7 +321,7 @@ export default function AdminUserEditPage() {
               value={formData.email}
               onChange={handleChange}
               placeholder="email@example.com"
-              className="h-10 w-full rounded-md border border-gray-300 bg-gray-50 px-3 text-sm outline-none focus:border-red-400 focus:ring-1 focus:ring-red-400"
+              className="h-10 w-full rounded-md border border-gray-300 bg-gray-50 px-3 text-sm outline-none focus:border-pink-400 focus:ring-1 focus:ring-pink-400"
             />
           </div>
 
@@ -334,7 +334,7 @@ export default function AdminUserEditPage() {
               value={formData.phone}
               onChange={handleChange}
               placeholder="9812345678"
-              className="h-10 w-full rounded-md border border-gray-300 bg-gray-50 px-3 text-sm outline-none focus:border-red-400 focus:ring-1 focus:ring-red-400"
+              className="h-10 w-full rounded-md border border-gray-300 bg-gray-50 px-3 text-sm outline-none focus:border-pink-400 focus:ring-1 focus:ring-pink-400"
             />
           </div>
 
@@ -347,7 +347,7 @@ export default function AdminUserEditPage() {
               onChange={handleChange}
               rows={3}
               placeholder="Tell us about this user..."
-              className="w-full rounded-md border border-gray-300 bg-gray-50 px-3 py-2 text-sm outline-none resize-none focus:border-red-400 focus:ring-1 focus:ring-red-400"
+              className="w-full rounded-md border border-gray-300 bg-gray-50 px-3 py-2 text-sm outline-none resize-none focus:border-pink-400 focus:ring-1 focus:ring-pink-400"
             />
           </div>
 
@@ -358,7 +358,7 @@ export default function AdminUserEditPage() {
               name="role"
               value={formData.role}
               onChange={handleChange}
-              className="h-10 w-full rounded-md border border-gray-300 bg-gray-50 px-3 text-sm outline-none focus:border-red-400 focus:ring-1 focus:ring-red-400"
+              className="h-10 w-full rounded-md border border-gray-300 bg-gray-50 px-3 text-sm outline-none focus:border-pink-400 focus:ring-1 focus:ring-pink-400"
             >
               <option value="user">User</option>
               <option value="admin">Admin</option>
@@ -369,7 +369,7 @@ export default function AdminUserEditPage() {
           <button
             type="submit"
             disabled={submitting}
-            className="h-10 w-full rounded-md bg-red-400 text-white text-sm font-semibold hover:bg-red-500 disabled:opacity-60 disabled:cursor-not-allowed"
+            className="h-10 w-full rounded-md bg-pink-400 text-white text-sm font-semibold hover:bg-pink-500 disabled:opacity-60 disabled:cursor-not-allowed"
           >
             {submitting ? "Updating..." : "Update User"}
           </button>

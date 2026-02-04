@@ -10,16 +10,6 @@ import { useState, useTransition } from "react";
 import { handleLogin } from "@/lib/action/auth-action";
 import { LoginData, loginSchema } from "../schema";
 
-// ✅ Helper: decode JWT token and extract the role
-function decodeToken(token: string): { role?: string } | null {
-  try {
-    const payload = token.split(".")[1];
-    return JSON.parse(atob(payload));
-  } catch {
-    return null;
-  }
-}
-
 export default function LoginForm() {
   const router = useRouter();
   const [pending, startTransition] = useTransition();
@@ -41,16 +31,13 @@ export default function LoginForm() {
         throw new Error(res.message || "Login Failed");
       }
 
-      // ✅ Decode the token from the cookie to get the role
-      const token = document.cookie
-        .split("; ")
-        .find((row) => row.startsWith("token="))?.split("=")[1];
+      // ✅ Ensure cookie is set by backend
+      // handleLogin should set "auth_token" cookie with JWT
 
-      const decoded = token ? decodeToken(token) : null;
+      const role = res.user?.role || res.data?.role;
+      // LoginForm.tsx
+const redirectPath = role === "admin" ? "/admin/dashboard" : "/dashboard";
 
-      // ✅ Redirect based on role: admin → /admin/dashboard, others → /dashboard
-      const redirectPath =
-        decoded?.role === "admin" ? "/admin/dashboard" : "/dashboard";
 
       startTransition(() => {
         router.push(redirectPath);
@@ -61,7 +48,10 @@ export default function LoginForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="space-y-4 bg-white p-6 rounded-lg shadow-md w-full max-w-md mx-auto"
+    >
       {error && <p className="text-sm text-red-600">{error}</p>}
 
       <div className="space-y-1">
@@ -71,7 +61,7 @@ export default function LoginForm() {
         <input
           id="email"
           type="email"
-          className="h-10 w-full rounded-md border border-gray-300 px-3 text-sm outline-none focus:border-red-500"
+          className="h-10 w-full rounded-md border border-gray-300 px-3 text-sm outline-none focus:border-pink-500"
           placeholder="you@example.com"
           {...register("email")}
         />
@@ -87,7 +77,7 @@ export default function LoginForm() {
         <input
           id="password"
           type="password"
-          className="h-10 w-full rounded-md border border-gray-300 px-3 text-sm outline-none focus:border-red-500"
+          className="h-10 w-full rounded-md border border-gray-300 px-3 text-sm outline-none focus:border-pink-500"
           placeholder="••••••"
           {...register("password")}
         />
@@ -99,7 +89,7 @@ export default function LoginForm() {
       <button
         type="submit"
         disabled={pending}
-        className="h-10 w-full rounded-md bg-red-600 text-white text-sm font-semibold hover:bg-red-700 disabled:opacity-60"
+        className="h-10 w-full rounded-md bg-pink-600 text-white text-sm font-semibold hover:bg-pink-700 disabled:opacity-60"
       >
         {pending ? "Signing in..." : "Sign in"}
       </button>
@@ -108,7 +98,7 @@ export default function LoginForm() {
         Don&apos;t have an account?{" "}
         <Link
           href="/register"
-          className="font-semibold text-red-600 hover:underline"
+          className="font-semibold text-pink-600 hover:underline"
         >
           Sign Up
         </Link>

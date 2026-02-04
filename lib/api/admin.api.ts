@@ -1,6 +1,3 @@
-// lib/api/admin.api.ts
-// All admin API functions to talk to the backend
-
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 // Helper function to get token from cookie
@@ -16,24 +13,31 @@ const getToken = (): string | null => {
   return null;
 };
 
+// Utility: safely parse JSON or throw with text
+const safeJson = async (response: Response) => {
+  const text = await response.text();
+  try {
+    return JSON.parse(text);
+  } catch {
+    throw new Error(`Invalid JSON response: ${text.slice(0, 100)}`);
+  }
+};
+
 // ✅ 1. CREATE USER
 export const createUser = async (formData: FormData) => {
   const token = getToken();
 
   const response = await fetch(`${API_BASE_URL}/api/admin/users`, {
     method: "POST",
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
+    headers: { Authorization: `Bearer ${token}` },
     body: formData,
   });
 
-  const data = await response.json();
+  const data = await safeJson(response);
 
   if (!response.ok) {
     throw new Error(data.message || "Failed to create user");
   }
-
   return data;
 };
 
@@ -49,12 +53,11 @@ export const getAllUsers = async () => {
     },
   });
 
-  const data = await response.json();
+  const data = await safeJson(response);
 
   if (!response.ok) {
     throw new Error(data.message || "Failed to fetch users");
   }
-
   return data;
 };
 
@@ -70,12 +73,11 @@ export const getUserById = async (id: string) => {
     },
   });
 
-  const data = await response.json();
+  const data = await safeJson(response);
 
   if (!response.ok) {
     throw new Error(data.message || "Failed to fetch user");
   }
-
   return data;
 };
 
@@ -85,18 +87,15 @@ export const updateUser = async (id: string, formData: FormData) => {
 
   const response = await fetch(`${API_BASE_URL}/api/admin/users/${id}`, {
     method: "PUT",
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
+    headers: { Authorization: `Bearer ${token}` },
     body: formData,
   });
 
-  const data = await response.json();
+  const data = await safeJson(response);
 
   if (!response.ok) {
     throw new Error(data.message || "Failed to update user");
   }
-
   return data;
 };
 
@@ -112,11 +111,10 @@ export const deleteUser = async (id: string) => {
     },
   });
 
-  const data = await response.json();
+  const data = await safeJson(response);
 
   if (!response.ok) {
     throw new Error(data.message || "Failed to delete user");
   }
-
   return data;
 };
