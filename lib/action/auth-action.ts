@@ -73,11 +73,8 @@ export type AuthResponse<T = any> = {
 // ===== HANDLE REGISTER =====
 export const handleRegister = async (formData: any): Promise<AuthResponse> => {
   try {
-    // send data to backend API
     const res = await register(formData);
     if (res.success) {
-      // optionally, you could also set cookie after register if needed
-      // e.g., automatically log in after register
       return {
         success: true,
         data: res.data,
@@ -95,18 +92,18 @@ export const handleRegister = async (formData: any): Promise<AuthResponse> => {
 export const handleLogin = async (formData: any): Promise<AuthResponse> => {
   try {
     const res = await login(formData);
-    
+
     console.log("Backend login response:", res); // Debug log
-    
+
     if (res.success) {
       const token = res.token;
-      
-      // store JWT token in cookie
+
+      // ✅ store JWT token in cookie with unified name
       await setAuthToken(token);
-      
+
       // store user data in cookie
       await setUserData(res.data);
-      
+
       // ✅ Return user data with role for redirect logic
       return {
         success: true,
@@ -116,7 +113,7 @@ export const handleLogin = async (formData: any): Promise<AuthResponse> => {
           id: res.data?.id || res.data?._id,
           email: res.data?.email,
           name: res.data?.name,
-          role: res.data?.role || "user", // Get role from backend response
+          role: res.data?.role || "user",
         },
       };
     }

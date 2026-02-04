@@ -41,7 +41,10 @@ export default function RegisterForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="space-y-4 bg-white p-6 rounded-lg shadow-md w-full max-w-md mx-auto"
+    >
       {error && <p className="text-sm text-red-600">{error}</p>}
 
       {/* Name */}
@@ -53,16 +56,16 @@ export default function RegisterForm() {
           id="name"
           type="text"
           autoComplete="name"
-          className="h-10 w-full rounded-md border border-black/10 dark:border-white/15 bg-background px-3 text-sm outline-none focus:border-foreground/40"
+          className="h-10 w-full rounded-md border border-gray-300 px-3 text-sm outline-none focus:border-pink-500"
           {...register("name")}
-          placeholder="Srijal Shrestha"
+          placeholder="Shreejal Shrestha"
         />
         {errors.name && (
           <p className="text-xs text-red-600">{errors.name.message}</p>
         )}
       </div>
 
-      {/* Username - ADDED THIS FIELD */}
+      {/* Username */}
       <div className="space-y-1">
         <label className="text-sm font-medium" htmlFor="username">
           Username
@@ -71,9 +74,9 @@ export default function RegisterForm() {
           id="username"
           type="text"
           autoComplete="username"
-          className="h-10 w-full rounded-md border border-black/10 dark:border-white/15 bg-background px-3 text-sm outline-none focus:border-foreground/40"
+          className="h-10 w-full rounded-md border border-gray-300 px-3 text-sm outline-none focus:border-pink-500"
           {...register("username")}
-          placeholder="srijal123"
+          placeholder="shreejal123"
         />
         {errors.username && (
           <p className="text-xs text-red-600">{errors.username.message}</p>
@@ -89,9 +92,9 @@ export default function RegisterForm() {
           id="email"
           type="email"
           autoComplete="email"
-          className="h-10 w-full rounded-md border border-black/10 dark:border-white/15 bg-background px-3 text-sm outline-none focus:border-foreground/40"
+          className="h-10 w-full rounded-md border border-gray-300 px-3 text-sm outline-none focus:border-pink-500"
           {...register("email")}
-          placeholder="srijal@example.com"
+          placeholder="shreejal@example.com"
         />
         {errors.email && (
           <p className="text-xs text-red-600">{errors.email.message}</p>
@@ -107,7 +110,7 @@ export default function RegisterForm() {
           id="password"
           type="password"
           autoComplete="new-password"
-          className="h-10 w-full rounded-md border border-black/10 dark:border-white/15 bg-background px-3 text-sm outline-none focus:border-foreground/40"
+          className="h-10 w-full rounded-md border border-gray-300 px-3 text-sm outline-none focus:border-pink-500"
           {...register("password")}
           placeholder="••••••"
         />
@@ -125,7 +128,7 @@ export default function RegisterForm() {
           id="confirmPassword"
           type="password"
           autoComplete="new-password"
-          className="h-10 w-full rounded-md border border-black/10 dark:border-white/15 bg-background px-3 text-sm outline-none focus:border-foreground/40"
+          className="h-10 w-full rounded-md border border-gray-300 px-3 text-sm outline-none focus:border-pink-500"
           {...register("confirmPassword")}
           placeholder="••••••"
         />
@@ -140,7 +143,7 @@ export default function RegisterForm() {
       <button
         type="submit"
         disabled={pending}
-        className="h-10 w-full rounded-md bg-red-600 text-white text-sm font-semibold hover:bg-red-700 disabled:opacity-60"
+        className="h-10 w-full rounded-md bg-pink-600 text-white text-sm font-semibold hover:bg-pink-700 disabled:opacity-60"
       >
         {pending ? "Registering..." : "Register"}
       </button>
@@ -148,11 +151,10 @@ export default function RegisterForm() {
       {/* Login link */}
       <div className="mt-1 text-center text-sm">
         Already have an account?{" "}
-        <Link href="/login" className="font-semibold hover:underline">
+        <Link href="/login" className="font-semibold text-pink-600 hover:underline">
           Log in
         </Link>
       </div>
     </form>
   );
 }
-

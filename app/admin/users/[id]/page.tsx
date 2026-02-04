@@ -48,7 +48,7 @@ export default function AdminUserDetailPage() {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-400 mx-auto"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-pink-400 mx-auto"></div>
           <p className="mt-4 text-sm text-gray-600">Loading user...</p>
         </div>
       </div>
@@ -63,7 +63,7 @@ export default function AdminUserDetailPage() {
           <p className="text-red-500 text-sm mb-4">{error || "User not found"}</p>
           <Link
             href="/admin/users"
-            className="px-4 py-2 bg-red-400 text-white text-sm font-semibold rounded-md hover:bg-red-500"
+            className="px-4 py-2 bg-pink-400 text-white text-sm font-semibold rounded-md hover:bg-pink-500"
           >
             Back to Users
           </Link>
@@ -77,7 +77,7 @@ export default function AdminUserDetailPage() {
     if (!imagePath) return null;
     if (imagePath.startsWith("/uploads")) {
       return `/api/image-proxy?url=${encodeURIComponent(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}${imagePath}`
+       `${process.env.NEXT_PUBLIC_API_BASE_URL}${imagePath}`
       )}`;
     }
     return imagePath;
@@ -91,7 +91,7 @@ export default function AdminUserDetailPage() {
           <div className="flex items-center gap-3">
             <Link
               href="/admin/users"
-              className="text-sm text-gray-500 hover:text-red-500 transition-colors"
+              className="text-sm text-gray-500 hover:text-pink-500 transition-colors"
             >
               ← Back
             </Link>
@@ -99,7 +99,7 @@ export default function AdminUserDetailPage() {
           </div>
           <Link
             href={`/admin/users/${id}/edit`}
-            className="px-4 py-2 bg-red-400 text-white text-sm font-semibold rounded-md hover:bg-red-500 transition-colors"
+            className="px-4 py-2 bg-pink-400 text-white text-sm font-semibold rounded-md hover:bg-pink-500 transition-colors"
           >
             Edit User
           </Link>
@@ -112,7 +112,7 @@ export default function AdminUserDetailPage() {
           {/* Avatar + Name */}
           <div className="flex items-center gap-4 mb-6 pb-6 border-b border-gray-100">
             {/* Avatar */}
-            <div className="w-16 h-16 rounded-full overflow-hidden border-4 border-red-200 bg-red-100 flex items-center justify-center">
+            <div className="w-16 h-16 rounded-full overflow-hidden border-4 border-pink-200 bg-pink-100 flex items-center justify-center">
               {user.profileImage ? (
                 <img
                   src={getImageUrl(user.profileImage) || ""}
@@ -120,7 +120,7 @@ export default function AdminUserDetailPage() {
                   className="w-full h-full object-cover"
                 />
               ) : (
-                <span className="text-xl font-semibold text-red-600">
+                <span className="text-xl font-semibold text-pink-600">
                   {user.firstName ? user.firstName[0] : user.email[0].toUpperCase()}
                 </span>
               )}
@@ -136,7 +136,7 @@ export default function AdminUserDetailPage() {
               <span
                 className={`inline-block px-2 py-1 rounded-full text-xs font-semibold ${
                   user.role === "admin"
-                    ? "bg-red-100 text-red-700"
+                    ? "bg-pink-100 text-pink-700"
                     : "bg-gray-100 text-gray-600"
                 }`}
               >
