@@ -3,22 +3,17 @@ import { redirect } from 'next/navigation';
 import Link from 'next/link';
 
 export default async function AdminDashboard() {
-  // ✅ AWAIT cookies()
   const cookieStore = await cookies();
   const authToken = cookieStore.get('auth_token');
   const userDataCookie = cookieStore.get('user_data');
   
-  // ✅ Check if user is logged in
   if (!authToken || !userDataCookie) {
     redirect('/login');
   }
 
-  // ✅ Parse user data from cookie
   let userData = null;
   try {
     userData = JSON.parse(userDataCookie.value);
-    
-    // ✅ If user is NOT admin, redirect to user dashboard
     if (userData.role !== 'admin') {
       redirect('/dashboard');
     }
@@ -82,7 +77,7 @@ export default async function AdminDashboard() {
           <div className="bg-white rounded-lg shadow-md p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-gray-500 text-sm">Total Customers</p>
+                <p className="text-gray-500 text-sm">Total Users</p>
                 <p className="text-3xl font-bold text-gray-800">156</p>
               </div>
               <div className="text-5xl">👥</div>
@@ -100,14 +95,14 @@ export default async function AdminDashboard() {
             </div>
           </div>
 
-          {/* Products */}
+          {/* Create User */}
           <div className="bg-white rounded-lg shadow-md p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-gray-500 text-sm">Products</p>
-                <p className="text-3xl font-bold text-gray-800">89</p>
+                <p className="text-gray-500 text-sm">Create User</p>
+                <p className="text-3xl font-bold text-gray-800">+ New</p>
               </div>
-              <div className="text-5xl">👗</div>
+              <div className="text-5xl">➕</div>
             </div>
           </div>
         </div>
@@ -119,26 +114,26 @@ export default async function AdminDashboard() {
             <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition cursor-pointer">
               <div className="text-5xl mb-4">👥</div>
               <h3 className="text-xl font-semibold text-gray-800 mb-2">
-                Manage Customers
+                Manage Users
               </h3>
               <p className="text-gray-600 mb-4">
-                View and manage all registered customers
+                View and manage all registered users
               </p>
-              <div className="text-pink-500 font-medium">View Customers →</div>
+              <div className="text-pink-500 font-medium">View Users →</div>
             </div>
           </Link>
 
-          {/* Add Product */}
-          <Link href="/admin/products/create">
+          {/* Create User */}
+          <Link href="/admin/create-user">
             <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition cursor-pointer">
               <div className="text-5xl mb-4">➕</div>
               <h3 className="text-xl font-semibold text-gray-800 mb-2">
-                Add Product
+                Create User
               </h3>
               <p className="text-gray-600 mb-4">
-                Create a new fashion product listing
+                Add a new user account
               </p>
-              <div className="text-pink-500 font-medium">Add Product →</div>
+              <div className="text-pink-500 font-medium">Add User →</div>
             </div>
           </Link>
 
@@ -152,18 +147,6 @@ export default async function AdminDashboard() {
               Track and manage all customer orders
             </p>
             <div className="text-pink-500 font-medium">View Orders →</div>
-          </div>
-
-          {/* Inventory */}
-          <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition cursor-pointer">
-            <div className="text-5xl mb-4">👗</div>
-            <h3 className="text-xl font-semibold text-gray-800 mb-2">
-              Product Inventory
-            </h3>
-            <p className="text-gray-600 mb-4">
-              Manage fashion products and stock
-            </p>
-            <div className="text-pink-500 font-medium">Manage Inventory →</div>
           </div>
 
           {/* Analytics */}

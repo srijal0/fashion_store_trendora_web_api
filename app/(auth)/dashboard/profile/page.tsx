@@ -18,58 +18,96 @@ export default function ProfilePage() {
   };
 
   return (
-    <div>
+    <div className="min-h-screen bg-gray-50 p-8">
       <h1 className="text-3xl font-bold text-gray-800 mb-8">My Profile</h1>
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        {/* Personal Info */}
         <div className="lg:col-span-2">
-          <div className="bg-white rounded-xl p-8 border border-pink-100">
+          <div className="bg-white rounded-xl p-8 border border-pink-100 shadow-sm">
             <div className="flex justify-between items-center mb-6">
               <h2 className="text-xl font-bold text-gray-800">Personal Information</h2>
               {!isEditing && (
-                <button onClick={() => setIsEditing(true)} className="px-6 py-2 border border-pink-300 text-pink-600 rounded-full hover:bg-pink-50 transition">
+                <button
+                  onClick={() => setIsEditing(true)}
+                  className="px-6 py-2 border border-pink-300 text-pink-600 rounded-full hover:bg-pink-50 transition"
+                >
                   ✏️ Edit
                 </button>
               )}
             </div>
             <div className="space-y-6">
+              {/* Name */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
                 {isEditing ? (
-                  <input type="text" value={editedProfile.name} onChange={(e) => setEditedProfile({ ...editedProfile, name: e.target.value })} className="w-full px-4 py-3 border border-pink-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-300" />
+                  <input
+                    type="text"
+                    value={editedProfile.name}
+                    onChange={(e) => setEditedProfile({ ...editedProfile, name: e.target.value })}
+                    className="w-full px-4 py-3 border border-pink-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-300"
+                  />
                 ) : (
                   <p className="text-gray-800 text-lg">{profile.name}</p>
                 )}
               </div>
+              {/* Email */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">Email</label>
                 {isEditing ? (
-                  <input type="email" value={editedProfile.email} onChange={(e) => setEditedProfile({ ...editedProfile, email: e.target.value })} className="w-full px-4 py-3 border border-pink-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-300" />
+                  <input
+                    type="email"
+                    value={editedProfile.email}
+                    onChange={(e) => setEditedProfile({ ...editedProfile, email: e.target.value })}
+                    className="w-full px-4 py-3 border border-pink-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-300"
+                  />
                 ) : (
                   <p className="text-gray-800 text-lg">{profile.email}</p>
                 )}
               </div>
+              {/* Phone */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
                 {isEditing ? (
-                  <input type="tel" value={editedProfile.phone} onChange={(e) => setEditedProfile({ ...editedProfile, phone: e.target.value })} className="w-full px-4 py-3 border border-pink-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-300" />
+                  <input
+                    type="tel"
+                    value={editedProfile.phone}
+                    onChange={(e) => setEditedProfile({ ...editedProfile, phone: e.target.value })}
+                    className="w-full px-4 py-3 border border-pink-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-300"
+                  />
                 ) : (
                   <p className="text-gray-800 text-lg">{profile.phone}</p>
                 )}
               </div>
+              {/* Address */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">Address</label>
                 {isEditing ? (
-                  <textarea value={editedProfile.address} onChange={(e) => setEditedProfile({ ...editedProfile, address: e.target.value })} rows={3} className="w-full px-4 py-3 border border-pink-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-300" />
+                  <textarea
+                    value={editedProfile.address}
+                    onChange={(e) => setEditedProfile({ ...editedProfile, address: e.target.value })}
+                    rows={3}
+                    className="w-full px-4 py-3 border border-pink-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-300"
+                  />
                 ) : (
                   <p className="text-gray-800 text-lg">{profile.address}</p>
                 )}
               </div>
+              {/* Save / Cancel */}
               {isEditing && (
                 <div className="flex gap-3 pt-4">
-                  <button onClick={handleSave} className="flex-1 py-3 px-6 bg-pink-500 text-white rounded-full hover:bg-pink-600 transition font-semibold">
+                  <button
+                    onClick={handleSave}
+                    className="flex-1 py-3 px-6 bg-pink-500 text-white rounded-full hover:bg-pink-600 transition font-semibold"
+                  >
                     Save Changes
                   </button>
-                  <button onClick={() => { setEditedProfile(profile); setIsEditing(false); }} className="flex-1 py-3 px-6 border border-pink-300 text-pink-600 rounded-full hover:bg-pink-50 transition font-medium">
+                  <button
+                    onClick={() => {
+                      setEditedProfile(profile);
+                      setIsEditing(false);
+                    }}
+                    className="flex-1 py-3 px-6 border border-pink-300 text-pink-600 rounded-full hover:bg-pink-50 transition font-medium"
+                  >
                     Cancel
                   </button>
                 </div>
@@ -77,8 +115,10 @@ export default function ProfilePage() {
             </div>
           </div>
         </div>
+
+        {/* Account Stats */}
         <div className="lg:col-span-1">
-          <div className="bg-white rounded-xl p-6 border border-pink-100">
+          <div className="bg-white rounded-xl p-6 border border-pink-100 shadow-sm">
             <h3 className="font-bold text-gray-800 mb-4">Account Stats</h3>
             <div className="space-y-4">
               <div className="flex justify-between items-center">

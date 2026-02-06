@@ -2,6 +2,8 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { LogoutButton } from "../_components/LogoutButton";
+
 
 export default function UserDashboardPage() {
   return (
@@ -18,15 +20,12 @@ export default function UserDashboardPage() {
         </nav>
 
         <div className="flex gap-4">
-          <Link href="/profile" className="text-gray-700 hover:text-black">
+          {/* ✅ Profile link points to /dashboard/profile */}
+          <Link href="/dashboard/profile" className="text-gray-700 hover:text-black">
             Profile
           </Link>
-          <Link
-            href="/logout"
-            className="bg-pink-600 hover:bg-pink-700 text-white px-4 py-2 rounded font-semibold"
-          >
-            Logout
-          </Link>
+          {/* ✅ Logout button clears cookies and redirects */}
+          <LogoutButton />
         </div>
       </header>
 
@@ -108,7 +107,6 @@ export default function UserDashboardPage() {
   );
 }
 
-
 /* ================= UI Components ================= */
 
 function StatCard({ title, value }: { title: string; value: string }) {
@@ -123,14 +121,8 @@ function StatCard({ title, value }: { title: string; value: string }) {
 function ProductCard({ name, imagePath }: { name: string; imagePath: string }) {
   return (
     <div className="bg-white rounded-lg shadow-sm p-4 flex flex-col items-center w-full">
-      {/* Image container with fixed height */}
       <div className="relative h-32 w-full mb-3">
-        <Image
-          src={imagePath}
-          alt={name}
-          fill
-          className="object-cover rounded"
-        />
+        <Image src={imagePath} alt={name} fill className="object-cover rounded" />
       </div>
       <p className="text-sm font-medium text-gray-700">{name}</p>
       <button className="mt-2 text-xs bg-pink-600 text-white px-3 py-1 rounded hover:bg-pink-700">
@@ -167,4 +159,3 @@ function OrderRow({
     </tr>
   );
 }
-
