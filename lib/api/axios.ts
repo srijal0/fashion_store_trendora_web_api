@@ -1,80 +1,3 @@
-// import axios from "axios";
-// import { getAuthToken } from "../cookie";
-
-// const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:5000";
-
-// const axiosInstance = axios.create({
-//   baseURL: BASE_URL,
-//   headers: {
-//     "Content-Type": "application/json",
-//   },
-// });
-
-// // Update request interceptor to use cookies instead of localStorage
-// axiosInstance.interceptors.request.use(async (config) => {
-//   try {
-//     // Get token from cookies (server-side safe)
-//     const token = await getAuthToken();
-//     if (token && config.headers) {
-//       config.headers.Authorization = `Bearer ${token}`;
-//     }
-//   } catch (error) {
-//     // If we're on client-side and can't use server action, try to get from cookie directly
-//     if (typeof document !== "undefined") {
-//       const cookies = document.cookie.split(';');
-//       const authCookie = cookies.find(c => c.trim().startsWith('auth_token='));
-//       if (authCookie) {
-//         const token = authCookie.split('=')[1];
-//         if (token && config.headers) {
-//           config.headers.Authorization = `Bearer ${token}`;
-//         }
-//       }
-//     }
-//   }
-//   return config;
-// });
-
-// axiosInstance.interceptors.response.use(
-//   (response) => response,
-//   (error) => {
-//     console.error("API Error:", error.response?.data || error.message);
-//     return Promise.reject(error);
-//   }
-// );
-
-// export default axiosInstance;
-
-// import axios from "axios";
-
-// const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:5000";
-
-// const axiosInstance = axios.create({
-//   baseURL: BASE_URL,
-//   headers: {
-//     "Content-Type": "application/json",
-//   },
-// });
-
-// axiosInstance.interceptors.request.use((config) => {
-//   const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
-//   if (token && config.headers) {
-//     config.headers.Authorization = `Bearer ${token}`;
-//   }
-//   return config;
-// });
-
-// axiosInstance.interceptors.response.use(
-//   (response) => response,
-//   (error) => {
-//     console.error("API Error:", error.response?.data || error.message);
-//     return Promise.reject(error);
-//   }
-// );
-
-// export default axiosInstance;
-
-
-// lib/api/axios.ts
 import axios from "axios";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:5000";
@@ -84,7 +7,7 @@ const axiosInstance = axios.create({
   headers: {
     "Content-Type": "application/json",
   },
-  withCredentials: true, // ✅ ADD THIS - Sends cookies with requests
+  withCredentials: true,
 });
 
 // Helper function to get token from cookie
@@ -108,13 +31,40 @@ axiosInstance.interceptors.request.use((config) => {
     config.headers.Authorization = `Bearer ${token}`;
   }
   
+  // ✅ Log every request
+  console.log("📤 Axios Request:", {
+    method: config.method?.toUpperCase(),
+    url: config.url,
+    baseURL: config.baseURL,
+    fullURL: `${config.baseURL}${config.url}`,
+    data: config.data,
+  });
+  
   return config;
 });
 
 axiosInstance.interceptors.response.use(
-  (response) => response,
+  (response) => {
+    // ✅ Log successful responses
+    console.log("✅ Axios Response:", {
+      status: response.status,
+      url: response.config.url,
+      data: response.data,
+    });
+    return response;
+  },
   (error) => {
-    console.error("API Error:", error.response?.data || error.message);
+    // ✅ More detailed error logging
+    console.error("❌ Axios Error:", {
+      status: error.response?.status,
+      statusText: error.response?.statusText,
+      data: error.response?.data,
+      message: error.message,
+      url: error.config?.url,
+      method: error.config?.method,
+      baseURL: error.config?.baseURL,
+      fullURL: error.config ? `${error.config.baseURL}${error.config.url}` : "unknown",
+    });
     return Promise.reject(error);
   }
 );
