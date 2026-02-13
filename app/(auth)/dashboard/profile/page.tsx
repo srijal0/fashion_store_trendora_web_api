@@ -9,6 +9,9 @@ interface ProfileData {
   address: string;
 }
 
+// ✅ ADD THIS - Use environment variable
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+
 export default function ProfilePage() {
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [profilePhoto, setProfilePhoto] = useState<string | null>(null);
@@ -42,13 +45,15 @@ export default function ProfilePage() {
           const userId = user.id || user._id;
           if (userId) {
             try {
+              // ✅ CHANGED - Use API_URL variable
               const response = await fetch(
-                `http://localhost:8000/api/upload/profile-image/${userId}`
+                `${API_URL}/api/upload/profile-image/${userId}`
               );
               if (response.ok) {
                 const imageData = await response.json();
                 if (imageData.data?.imageUrl) {
-                  const fullImageUrl = `http://localhost:8000${imageData.data.imageUrl}`;
+                  // ✅ CHANGED - Use API_URL variable
+                  const fullImageUrl = `${API_URL}${imageData.data.imageUrl}`;
                   setProfilePhoto(fullImageUrl);
                   localStorage.setItem("profilePhoto", fullImageUrl);
                 }
@@ -92,8 +97,9 @@ export default function ProfilePage() {
       formData.append("image", file);
       formData.append("userId", userId);
 
+      // ✅ CHANGED - Use API_URL variable
       const response = await fetch(
-        "http://localhost:8000/api/upload/profile-image",
+        `${API_URL}/api/upload/profile-image`,
         { method: "POST", body: formData }
       );
 
@@ -101,7 +107,8 @@ export default function ProfilePage() {
 
       const data = await response.json();
       if (data.data?.imageUrl) {
-        const fullImageUrl = `http://localhost:8000${data.data.imageUrl}`;
+        // ✅ CHANGED - Use API_URL variable
+        const fullImageUrl = `${API_URL}${data.data.imageUrl}`;
         setProfilePhoto(fullImageUrl);
         localStorage.setItem("profilePhoto", fullImageUrl);
       }
@@ -122,8 +129,9 @@ export default function ProfilePage() {
       const user = JSON.parse(userData);
       const userId = user.id || user._id;
 
+      // ✅ CHANGED - Use API_URL variable
       const response = await fetch(
-        `http://localhost:8000/api/upload/profile-image/${userId}`,
+        `${API_URL}/api/upload/profile-image/${userId}`,
         { method: "DELETE" }
       );
 
