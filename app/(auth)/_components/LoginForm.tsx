@@ -10,11 +10,10 @@ import { useState, useTransition } from "react";
 import { handleLogin } from "@/lib/action/auth-action";
 import { LoginData, loginSchema } from "../schema";
 
-
 export default function LoginForm() {
   const router = useRouter();
   const [pending, startTransition] = useTransition();
-  const [error, setError] = useState("");
+  const [error, setError] = useState<string>("");
 
   const {
     register,
@@ -22,48 +21,72 @@ export default function LoginForm() {
     formState: { errors },
   } = useForm<LoginData>({
     resolver: zodResolver(loginSchema),
+    mode: "onSubmit",
   });
 
   const onSubmit = async (data: LoginData) => {
+    setError("");
+
     try {
       const res = await handleLogin(data);
+      console.log("Login response:", res);
 
       if (!res.success) {
-        throw new Error(res.message || "Login Failed");
+        setError(res.message || "Login Failed");
+        return;
       }
 
-      // ✅ Ensure cookie is set by backend
-      // handleLogin should set "auth_token" cookie with JWT
+      /* ✅ SAVE USER INFO TO LOCAL STORAGE */
+      if (res.user) {
+        const user = res.user as any;
 
-      const role = res.user?.role || res.data?.role;
-      // LoginForm.tsx
-const redirectPath = role === "admin" ? "/admin/dashboard" : "/dashboard";
+        localStorage.setItem(
+          "user",
+          JSON.stringify({
+            id: user._id || user.id,
+            _id: user._id || user.id,
+            name: user.username || user.name,
+            email: user.email,
+            role: user.role,
+          })
+        );
+      }
 
+      /* ✅ Wait for backend to set cookie (VERY IMPORTANT for auth middleware) */
+      await new Promise((resolve) => setTimeout(resolve, 200));
 
-      startTransition(() => {
-        router.push(redirectPath);
-      });
-    } catch (err: Error | any) {
-      setError(err.message || "Login Failed");
+      /* ✅ Hard Redirect (prevents middleware/session issue) */
+      if (res.user?.role === "admin") {
+        window.location.href = "/admin/dashboard";
+      } else if (res.user?.role === "user") {
+        window.location.href = "/dashboard";
+      } else {
+        window.location.href = "/";
+      }
+    } catch (err: any) {
+      console.error("Login error:", err);
+      setError(err?.message || "Login Failed");
     }
   };
 
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="space-y-4 bg-white p-6 rounded-lg shadow-md w-full max-w-md mx-auto"
+      className="space-y-6 bg-white p-6 rounded-lg shadow-md w-full max-w-md mx-auto"
     >
       {error && <p className="text-sm text-red-600">{error}</p>}
 
+      {/* Email */}
       <div className="space-y-1">
-        <label className="text-sm font-medium" htmlFor="email">
-          Enter your email
+        <label htmlFor="email" className="text-sm font-medium">
+          Email
         </label>
         <input
           id="email"
           type="email"
-          className="h-10 w-full rounded-md border border-gray-300 px-3 text-sm outline-none focus:border-pink-500"
+          autoComplete="email"
           placeholder="you@example.com"
+          className="h-10 w-full rounded-md border border-gray-300 bg-gray-50 px-3 text-sm outline-none focus:border-pink-400 focus:ring-1 focus:ring-pink-400"
           {...register("email")}
         />
         {errors.email && (
@@ -71,35 +94,49 @@ const redirectPath = role === "admin" ? "/admin/dashboard" : "/dashboard";
         )}
       </div>
 
+      {/* Password */}
       <div className="space-y-1">
-        <label className="text-sm font-medium" htmlFor="password">
-          Enter your password
+        <label htmlFor="password" className="text-sm font-medium">
+          Password
         </label>
         <input
           id="password"
           type="password"
-          className="h-10 w-full rounded-md border border-gray-300 px-3 text-sm outline-none focus:border-pink-500"
+          autoComplete="current-password"
           placeholder="••••••"
+          className="h-10 w-full rounded-md border border-gray-300 bg-gray-50 px-3 text-sm outline-none focus:border-pink-400 focus:ring-1 focus:ring-pink-400"
           {...register("password")}
         />
         {errors.password && (
           <p className="text-xs text-red-600">{errors.password.message}</p>
         )}
+
+        {/* ✅ Forgot Password */}
+        <div className="text-right">
+          <Link
+            href="/forgot-password"
+            className="text-xs text-pink-400 hover:underline"
+          >
+            Forgot Password?
+          </Link>
+        </div>
       </div>
 
+      {/* Submit Button */}
       <button
         type="submit"
         disabled={pending}
-        className="h-10 w-full rounded-md bg-pink-600 text-white text-sm font-semibold hover:bg-pink-700 disabled:opacity-60"
+        className="h-10 w-full rounded-md bg-pink-500 text-white text-sm font-semibold hover:bg-pink-600 disabled:opacity-60"
       >
-        {pending ? "Signing in..." : "Sign in"}
+        {pending ? "Logging in..." : "Log in"}
       </button>
 
-      <div className="mt-1 text-center text-sm">
+      {/* Register */}
+      <div className="mt-2 text-center text-sm text-gray-600">
         Don&apos;t have an account?{" "}
         <Link
           href="/register"
-          className="font-semibold text-pink-600 hover:underline"
+          className="font-semibold text-pink-500 hover:underline"
         >
           Sign Up
         </Link>
