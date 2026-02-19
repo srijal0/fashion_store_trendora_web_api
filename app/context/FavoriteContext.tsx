@@ -1,17 +1,22 @@
 "use client";
 
-import { createContext, useContext, useState, ReactNode } from "react";
+import {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  ReactNode,
+} from "react";
 import { Product } from "./CartContext";
 
-// Favorite product type
 export interface FavoriteProduct extends Product {}
 
-// Context type
 interface FavoritesContextType {
   favorites: FavoriteProduct[];
   addToFavorites: (product: FavoriteProduct) => void;
   removeFromFavorites: (id: number) => void;
   clearFavorites: () => void;
+  isFavorite: (id: number) => boolean;
 }
 
 const FavoritesContext = createContext<FavoritesContextType | undefined>(undefined);
@@ -24,10 +29,31 @@ export const useFavorites = () => {
 
 export const FavoritesProvider = ({ children }: { children: ReactNode }) => {
   const [favorites, setFavorites] = useState<FavoriteProduct[]>([]);
+  const [hydrated, setHydrated] = useState(false);
+
+  // ── Load from localStorage on first mount ──
+  useEffect(() => {
+    try {
+      const stored = localStorage.getItem("trendora_favorites");
+      if (stored) {
+        setFavorites(JSON.parse(stored));
+      }
+    } catch {
+      // corrupted storage — start fresh
+    }
+    setHydrated(true);
+  }, []);
+
+  // ── Persist to localStorage whenever favorites change ──
+  useEffect(() => {
+    if (hydrated) {
+      localStorage.setItem("trendora_favorites", JSON.stringify(favorites));
+    }
+  }, [favorites, hydrated]);
 
   const addToFavorites = (product: FavoriteProduct) => {
     setFavorites((prev) => {
-      if (prev.find((p) => p.id === product.id)) return prev;
+      if (prev.find((p) => p.id === product.id)) return prev; // already saved
       return [...prev, product];
     });
   };
@@ -38,9 +64,11 @@ export const FavoritesProvider = ({ children }: { children: ReactNode }) => {
 
   const clearFavorites = () => setFavorites([]);
 
+  const isFavorite = (id: number) => favorites.some((p) => p.id === id);
+
   return (
     <FavoritesContext.Provider
-      value={{ favorites, addToFavorites, removeFromFavorites, clearFavorites }}
+      value={{ favorites, addToFavorites, removeFromFavorites, clearFavorites, isFavorite }}
     >
       {children}
     </FavoritesContext.Provider>
