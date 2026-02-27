@@ -1,36 +1,97 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 👗 Trendora – Fashion Store Web Application
 
-## Getting Started
+Trendora is a full-stack fashion store web application designed to provide users with a modern online shopping experience.
+This frontend system is built using Next.js and TypeScript and integrates with the Trendora RESTful Backend API to deliver secure authentication, user management, and interactive fashion product browsing.
 
-First, run the development server:
+The project demonstrates practical implementation of full-stack development concepts including API integration, responsive UI design, and automated testing.
 
-```bash
+
+
+## 🚀 Features
+
+* User Registration and Login
+* Secure Authentication Connected to Backend API
+* Fashion Product Browsing Interface
+* Profile Management System
+* Image Handling and Display
+* Responsive Design for Desktop and Mobile
+* Automated Testing using Jest and Cypress
+* Scalable Architecture using Next.js App Router
+
+
+
+## 🛠 Tech Stack
+
+* Framework: Next.js
+* Language: TypeScript
+* Styling: CSS / PostCSS
+* Testing: Jest + Cypress
+* API Communication: REST API Integration
+* Package Manager: npm
+
+
+
+## 📦 Installation
+
+### 1️⃣ Clone the Repository
+
+git clone https://github.com/srijal0/fashion_store_trendora_web_api.git
+cd fashion_store_trendora_web_api
+
+### 2️⃣ Install Dependencies
+
+npm install
+
+### 3️⃣ Run the Development Server
+
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🌐 Running the Application
 
-## Learn More
+Open your browser and go to:
 
-To learn more about Next.js, take a look at the following resources:
+http://localhost:3000
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Make sure the backend server is running at:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+http://localhost:5000
 
-## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 📁 Project Structure
+
+app/ → Application pages and routing
+lib/ → Utility and API integration logic
+public/ → Static assets (images, icons)
+**tests**/ → Unit and integration tests
+cypress/ → End-to-end testing
+config files → Next.js and TypeScript configuration
+
+
+
+## 🔗 Backend Integration
+
+This frontend communicates with the Trendora Backend API for:
+
+* Authentication (JWT-based login system)
+* User and Admin Management
+* Profile Updates
+* Image Upload and Retrieval
+
+
+
+## 🧪 Testing
+
+Run unit tests:
+npm test
+
+Run end-to-end tests:
+npx cypress open
+
+
+
+## 📚 Project Purpose
+
+This project was developed as part of academic coursework to demonstrate real-world full-stack web development by integrating a Next.js frontend with a Node.js REST API for a fashion store management system.
